@@ -1,3 +1,113 @@
+## Rockchip Loader Binaries Naming Rules
+
+### General Rules:
+
+Whether it is a single module or a merged loader, the naming convention is:
+
+```
+[chip]_[module]_[feature]_[version].[postfix]
+```
+
+**chip**:
+Chip or chip-family name. Required.
+Must be consistent with the names used in all kernel/U-Boot drivers.
+The specific naming method is not discussed here.
+Lowercase.
+
+**module**:
+Module name. Required.
+Examples: `loader`, `ddr`, `miniloader`, `usbplug`, `bl3x`, `tee`, `tee_ta`.
+Lowercase.
+
+**feature**:
+Module features. Optional. Multiple features are allowed.
+Examples: DDR frequency used, support for a specific DDR type only, special options for miniloader, etc.
+Lowercase.
+
+**version**:
+Version information. Required.
+Format: `v1.00`.
+Before official release: `0.xx`.
+After official release: `1.00` or later.
+Lowercase.
+
+**postfix**:
+File extension. Required.
+Default output from compilation is `.bin`.
+May also be `.elf`.
+Merged images use `.img`.
+Lowercase.
+
+Underscore (`_`) is used as the separator.
+
+**Example:**
+File provided by the DDR module:
+
+```
+rk3228_ddr3_800MHz_v1.06.bin
+```
+
+---
+
+### Special Rules:
+
+#### 1. Naming of merged loaders:
+
+* **loader**:
+  A loader merged from `ddrbin`, `usbplug`, and `miniloader`, used by the Windows RK upgrade tool.
+
+* **ubootloader**:
+  A loader merged from `ddrbin`, `usbplug`, and U-Boot, used by the Windows RK upgrade tool.
+
+* **idbloader**:
+  A binary merged from `ddrbin` and a first-stage loader (miniloader or U-Boot) in IDB format, written directly to the IDB area.
+
+**Note:**
+The name *miniloader* only refers to the binary output of the miniloader project itself and is not used in the name of the merged loader.
+
+---
+
+#### 2. Version definition for merged loaders:
+
+Format:
+
+```
+vx.yy.zzz
+```
+
+* **v**:
+  Indicates “version”. This character is always used, lowercase.
+
+* **x.yy**:
+  Version number of the DDR file. Lowercase.
+
+* **zzz**:
+
+  * `[1]` Version number of the miniloader file, with the dot removed. Lowercase.
+  * `[2]` Version number provided by U-Boot.
+
+---
+
+#### 3. Use uppercase letters where lowercase would cause ambiguity:
+
+For example, `GB` in DDR should not be written as `gb`.
+
+---
+
+### Example:
+
+Merged loader name:
+
+```
+rk3328_loader_v1.03.106.bin
+```
+
+Where:
+
+* `1.03` is the DDR version number (`v1.03`)
+* `106` is the miniloader version number (`v1.06`) with the dot removed
+
+---
 Rockchip loader binaries naming rule
 
 总则：
